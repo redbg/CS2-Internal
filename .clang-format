@@ -1,0 +1,31 @@
+BasedOnStyle: LLVM
+
+# 永远不使用tab
+UseTab: Never
+# 缩进宽度
+IndentWidth: 4
+# 命名空间缩进
+NamespaceIndentation: All
+# 访问修饰符偏移
+AccessModifierOffset: -4
+# 单行最大限制,0表示没有限制
+ColumnLimit: 0
+
+# 连续赋值对齐
+AlignConsecutiveAssignments: true
+# 连续位域对齐
+AlignConsecutiveBitFields: true
+# 连续声明对齐
+AlignConsecutiveDeclarations: true
+# 连续宏对齐
+AlignConsecutiveMacros: true
+# 连续注释对齐
+AlignTrailingComments: true
+
+# 大括号换行风格
+BreakBeforeBraces: Allman
+# 构造函数初始化列表换行风格
+BreakConstructorInitializers: BeforeComma
+
+# Lambda
+AllowShortLambdasOnASingleLine: Empty
