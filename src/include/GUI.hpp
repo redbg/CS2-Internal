@@ -1,24 +1,44 @@
 ﻿#pragma once
 #include "imgui.h"
 
+#include "Config.hpp"
 #include "Interface.hpp"
 #include "Offset.hpp"
 
 namespace GUI
 {
+    void ShowCheatsWindow();
+    void ShowDebugWindow();
+
     void ShowMainWindow()
     {
         // ImGui::ShowDemoWindow();
 
         ImGui::Begin("Main");
 
+        ShowCheatsWindow();
+        ShowDebugWindow();
+
+        ImGui::End();
+    }
+
+    void ShowCheatsWindow()
+    {
+        if (ImGui::CollapsingHeader("Cheats"))
+        {
+            ImGui::Checkbox("Triggerbot", &Config::Triggerbot);
+        }
+    }
+
+    void ShowDebugWindow()
+    {
         if (ImGui::CollapsingHeader("Debug"))
         {
             // Offset
             ImGui::SeparatorText("Offset");
             ImGui::LabelText("GameEntitySystem", "0x%p", CS2::Offset::GameEntitySystem);
             ImGui::LabelText("LocalPlayerController", "0x%p", CS2::Offset::LocalPlayerController);
-            ImGui::LabelText("GetEntity()", "0x%p", CS2::Offset::GetEntity);
+            ImGui::LabelText("GetEntity()", "0x%p", CS2::Offset::GetBaseEntity);
             if (ImGui::Button("Entity Dump"))
             {
                 printf("------------------------------ [Entity Dump] ------------------------------\n");
@@ -26,10 +46,10 @@ namespace GUI
                 printf("LocalPlayerController: 0x%p\n", *CS2::Offset::LocalPlayerController);
                 for (int i = 1; i <= 32; i++)
                 {
-                    auto entity = CS2::Offset::GetEntity(*CS2::Offset::GameEntitySystem, i);
+                    CS2::Class::CCSPlayerController *entity = static_cast<CS2::Class::CCSPlayerController *>(CS2::Offset::GetBaseEntity(*CS2::Offset::GameEntitySystem, i));
                     if (entity)
                     {
-                        printf("[%d] %p\n", i, entity);
+                        printf("[%d] %p m_hPawn:%p m_iPawnHealth:%d\n", i, entity, entity->m_hPawn().Get(), entity->m_iPawnHealth());
                     }
                 }
                 printf("\n");
@@ -60,8 +80,6 @@ namespace GUI
             ImGui::LabelText("Screen Width", "%d", CS2::Interface::EngineClient->GetScreenSize().cx);
             ImGui::LabelText("Screen Height", "%d", CS2::Interface::EngineClient->GetScreenSize().cy);
         }
-
-        ImGui::End();
     }
 
 } // namespace GUI

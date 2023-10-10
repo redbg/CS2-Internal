@@ -9,9 +9,8 @@
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
 
+#include "Cheat.hpp"
 #include "GUI.hpp"
-
-#include "Hook.hpp"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -81,8 +80,9 @@ namespace Hook
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        // Show Debug Window
+        // Show Main Window
         GUI::ShowMainWindow();
+        Cheat::Run();
 
         // Rendering
         ImGui::Render();

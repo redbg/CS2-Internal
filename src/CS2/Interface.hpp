@@ -1,8 +1,11 @@
 ﻿#pragma once
 #include <Windows.h>
 
-#include "CEngineClient.hpp"
-#include "Schema.hpp"
+// 前置声明
+namespace CS2::Schema
+{
+    class CSchemaSystem;
+} // namespace CS2::Schema
 
 namespace CS2::Interface
 {
@@ -25,6 +28,30 @@ namespace CS2::Interface
         return (T *)createInterface(pInterfaceName, &returnCode);
     }
 
-    Schema::CSchemaSystem     *SchemaSystem = CreateInterface<Schema::CSchemaSystem>("schemasystem.dll", "SchemaSystem_001");
-    CS2::Class::CEngineClient *EngineClient = CreateInterface<CS2::Class::CEngineClient>("engine2.dll", "Source2EngineToClient001");
+    // CEngineClient
+    class CEngineClient
+    {
+    public:
+        bool IsInGame()
+        {
+            return Virtual::Call<32, bool>(this);
+        }
+
+        bool IsConnected()
+        {
+            return Virtual::Call<33, bool>(this);
+        }
+
+        SIZE GetScreenSize()
+        {
+            // size.cx = width
+            // size.cy = height
+            SIZE size = {};
+            Virtual::Call<50, void>(this, &size.cx, &size.cy);
+            return size;
+        }
+    };
+
+    Schema::CSchemaSystem *SchemaSystem = CreateInterface<Schema::CSchemaSystem>("schemasystem.dll", "SchemaSystem_001");
+    CEngineClient         *EngineClient = CreateInterface<CEngineClient>("engine2.dll", "Source2EngineToClient001");
 } // namespace CS2::Interface
