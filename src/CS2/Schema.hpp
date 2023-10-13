@@ -9,7 +9,7 @@
 #include "Interface.hpp"
 
 #define SCHEMA(type, name, field_name, class_name, module_name)                                               \
-    type name()                                                                                               \
+    std::add_lvalue_reference_t<type> name()                                                                  \
     {                                                                                                         \
         return *(type *)((uint64_t)this + CS2::Schema::GetSchemaOffset(module_name, class_name, field_name)); \
     }

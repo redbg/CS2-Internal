@@ -8,6 +8,7 @@ namespace Console
     void Initialize()
     {
         AllocConsole();
+        SetConsoleOutputCP(CP_UTF8);
         SetConsoleTitleA("CS2-Internal");
         freopen_s((FILE **)stdin, "CONIN$", "r", stdin);
         freopen_s((FILE **)stdout, "CONOUT$", "w", stdout);

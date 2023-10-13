@@ -14,6 +14,7 @@ namespace CS2::Class
     {
     public:
         SCHEMA(uint8_t, m_iTeamNum, "m_iTeamNum", "C_BaseEntity", "client.dll");
+        SCHEMA(int32_t, m_iHealth, "m_iHealth", "C_BaseEntity", "client.dll");
     };
 
 } // namespace CS2::Class

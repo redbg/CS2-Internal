@@ -9,7 +9,7 @@
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
 
-#include "Cheat.hpp"
+#include "Cheats.hpp"
 #include "GUI.hpp"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -82,7 +82,7 @@ namespace Hook
 
         // Show Main Window
         GUI::ShowMainWindow();
-        Cheat::Run();
+        CS2::Cheats::Run();
 
         // Rendering
         ImGui::Render();
