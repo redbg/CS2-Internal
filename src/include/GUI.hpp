@@ -1,9 +1,4 @@
 ﻿#pragma once
-#include "imgui.h"
-
-#include "Config.hpp"
-#include "Interface.hpp"
-#include "Offset.hpp"
 
 namespace GUI
 {
@@ -26,9 +21,22 @@ namespace GUI
     {
         if (ImGui::CollapsingHeader("Cheats"))
         {
-            ImGui::Checkbox("Triggerbot", &Config::Triggerbot);
-            ImGui::Checkbox("RadarSpotted", &Config::RadarSpotted);
-            ImGui::Checkbox("Aimbot", &Config::Aimbot);
+            // Triggerbot
+            ImGui::SeparatorText("Triggerbot");
+            ImGui::Checkbox("Enable##Triggerbot", &Config::Triggerbot::Enable);
+            ImGui::Checkbox("CheckTeam##Triggerbot", &Config::Triggerbot::CheckTeam);
+            ImGui::InputFloat("Delay##Triggerbot", &Config::Triggerbot::Delay);
+
+            // Aimbot
+            ImGui::SeparatorText("Aimbot");
+            ImGui::Checkbox("Enable##Aimbot", &Config::Aimbot::Enable);
+            ImGui::Checkbox("CheckTeam##Aimbot", &Config::Aimbot::CheckTeam);
+            ImGui::Checkbox("CheckVisible##Aimbot", &Config::Aimbot::CheckVisible);
+            ImGui::InputInt("BoneIndex##Aimbot", &Config::Aimbot::BoneIndex);
+
+            // Radar
+            ImGui::SeparatorText("Radar");
+            ImGui::Checkbox("Spotted##Radar", &Config::Radar::Spotted);
         }
     }
 
@@ -62,7 +70,7 @@ namespace GUI
 
                     auto playerPawn = static_cast<CS2::Class::C_CSPlayerPawn *>(playerController->m_hPawn().Get());
 
-                    printf("[%d] playerController:%p [%s] m_bPawnIsAlive:%d m_iTeamNum:%d m_hPawn:%p m_iHealth:%d m_bSpotted:%d SpottedByMask:%llx\n", i,
+                    printf("[%d] playerController:%p [%s] m_bPawnIsAlive:%d m_iTeamNum:%d m_hPawn:%p m_iHealth:%d m_bSpotted:%d SpottedByMask:%llx BoneData:%p\n", i,
                            playerController,
                            playerController->m_sSanitizedPlayerName(),
                            playerController->m_bPawnIsAlive(),
@@ -70,7 +78,8 @@ namespace GUI
                            playerPawn,
                            playerPawn->m_iHealth(),
                            playerPawn->m_entitySpottedState().m_bSpotted,
-                           playerPawn->m_entitySpottedState().GetSpottedByMask());
+                           playerPawn->m_entitySpottedState().GetSpottedByMask(),
+                           static_cast<CS2::Class::CSkeletonInstance *>(playerPawn->m_pGameSceneNode())->GetBoneData());
                 }
                 printf("\n");
             }

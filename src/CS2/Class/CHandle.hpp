@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include "Offset.hpp"
-#include <stdint.h>
 
 constexpr auto INVALID_EHANDLE_INDEX     = 0xffffffff;
 constexpr auto ENT_ENTRY_MASK            = 0x7fff;

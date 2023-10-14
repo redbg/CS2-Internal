@@ -1,12 +1,4 @@
 ﻿#pragma once
-#include <Windows.h>
-#include <stdint.h>
-#include <stdio.h>
-
-#include "SDK.hpp"
-#include "Virtual.hpp"
-
-#include "Interface.hpp"
 
 #define SCHEMA(type, name, field_name, class_name, module_name)                                               \
     std::add_lvalue_reference_t<type> name()                                                                  \

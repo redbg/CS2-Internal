@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include "CCSPlayerController.hpp"
-#include "Memory.hpp"
 
 namespace CS2::Offset
 {

@@ -1,16 +1,4 @@
 ﻿#pragma once
-#include <Windows.h>
-#include <d3d11.h>
-#include <iostream>
-
-#include "Memory.hpp"
-
-#include "imgui.h"
-#include "imgui_impl_dx11.h"
-#include "imgui_impl_win32.h"
-
-#include "Cheats.hpp"
-#include "GUI.hpp"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

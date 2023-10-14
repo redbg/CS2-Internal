@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "C_BaseEntity.hpp"
 
 namespace CS2::Class
 {
@@ -46,11 +45,22 @@ namespace CS2::Class
         }
     };
 
+    class CountdownTimer
+    {
+    public:
+        SCHEMA(float, m_timestamp, "m_timestamp", "CountdownTimer", "client.dll");
+    };
+
     // C_CSPlayerPawnBase
     class C_CSPlayerPawnBase : public C_BasePlayerPawn
     {
     public:
+        SCHEMA(bool, m_bIsScoped, "m_bIsScoped", "C_CSPlayerPawnBase", "client.dll");   // 是否开镜
+        SCHEMA(bool, m_bIsWalking, "m_bIsWalking", "C_CSPlayerPawnBase", "client.dll"); // 是否静步
+        SCHEMA(int32_t, m_iShotsFired, "m_iShotsFired", "C_CSPlayerPawnBase", "client.dll");
         SCHEMA(int, m_iIDEntIndex, "m_iIDEntIndex", "C_CSPlayerPawnBase", "client.dll");
+        SCHEMA(CountdownTimer, m_delayTargetIDTimer, "m_delayTargetIDTimer", "C_CSPlayerPawnBase", "client.dll");
+        SCHEMA(CountdownTimer, m_holdTargetIDTimer, "m_holdTargetIDTimer", "C_CSPlayerPawnBase", "client.dll");
         SCHEMA(SDK::Vector, m_vecLastClipCameraPos, "m_vecLastClipCameraPos", "C_CSPlayerPawnBase", "client.dll");
         SCHEMA(EntitySpottedState_t, m_entitySpottedState, "m_entitySpottedState", "C_CSPlayerPawnBase", "client.dll"); // EntitySpottedState_t
     };

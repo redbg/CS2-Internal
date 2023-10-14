@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include "CHandle.hpp"
-#include "C_CSPlayerPawn.hpp"
 
 namespace CS2::Class
 {

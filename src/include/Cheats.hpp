@@ -1,13 +1,10 @@
 ﻿#pragma once
-#include "Offset.hpp"
-
-#include "Config.hpp"
 
 namespace CS2::Cheats
 {
     void Triggerbot()
     {
-        if (!Config::Triggerbot)
+        if (!Config::Triggerbot::Enable)
             return;
 
         if (!ImGui::IsKeyDown(ImGuiKey_MouseX2))
@@ -27,17 +24,28 @@ namespace CS2::Cheats
         if (iIDEntIndex == -1)
             return;
 
-        auto playerPawn = CS2::Offset::GetBaseEntity(*CS2::Offset::GameEntitySystem, iIDEntIndex); // C_CSPlayerPawn
-        if (playerPawn->m_iTeamNum() != 0 && playerPawn->m_iTeamNum() != localPlayerController->m_iTeamNum())
+        if ((localPlayerPawn->m_holdTargetIDTimer().m_timestamp() - localPlayerPawn->m_delayTargetIDTimer().m_timestamp() + 0.3) < Config::Triggerbot::Delay)
+            return;
+
+        // Check Team
+        if (Config::Triggerbot::CheckTeam)
         {
-            mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-            mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+            auto playerPawn = CS2::Offset::GetBaseEntity(*CS2::Offset::GameEntitySystem, iIDEntIndex); // C_CSPlayerPawn
+
+            if (playerPawn->m_iTeamNum() == 0)
+                return;
+
+            if (playerPawn->m_iTeamNum() == localPlayerController->m_iTeamNum())
+                return;
         }
+
+        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
     }
 
     void RadarSpotted()
     {
-        if (!Config::RadarSpotted)
+        if (!Config::Radar::Spotted)
             return;
 
         if (!ImGui::IsKeyDown(ImGuiKey_MouseX2))
@@ -72,7 +80,7 @@ namespace CS2::Cheats
 
     void Aimbot()
     {
-        if (!Config::Aimbot)
+        if (!Config::Aimbot::Enable)
             return;
 
         if (!ImGui::IsKeyDown(ImGuiKey_MouseX2) && !ImGui::IsKeyDown(ImGuiKey_MouseLeft))
@@ -103,20 +111,39 @@ namespace CS2::Cheats
                 continue;
             }
 
-            if (playerController->m_iTeamNum() == localPlayerController->m_iTeamNum())
-                continue;
+            // Check Team
+            if (Config::Aimbot::CheckTeam)
+            {
+                if (playerController->m_iTeamNum() == localPlayerController->m_iTeamNum())
+                    continue;
+            }
 
             if (!playerController->m_bPawnIsAlive())
                 continue;
 
             auto playerPawn = static_cast<CS2::Class::C_CSPlayerPawn *>(playerController->m_hPawn().Get());
 
-            // Visible Check
-            if (playerPawn->m_entitySpottedState().GetSpottedByMask() & (uint64_t(1) << (localPlayerControllerIndex - 1)) ||
+            if (playerPawn->m_iHealth() <= 0)
+                return;
+
+            // Check Visible
+            if (Config::Aimbot::CheckVisible == false ||
+                playerPawn->m_entitySpottedState().GetSpottedByMask() & (uint64_t(1) << (localPlayerControllerIndex - 1)) ||
                 localPlayerPawn->m_entitySpottedState().GetSpottedByMask() & (uint64_t(1) << (i - 1)))
             {
-                SDK::Vector aimbotAngle = SDK::CalcAngle(localPlayerPawn->m_vecLastClipCameraPos(), playerPawn->m_vecLastClipCameraPos());
-                Offset::SetViewAngle(Offset::CSGOInput, 0, aimbotAngle);
+                auto BoneData = static_cast<CS2::Class::CSkeletonInstance *>(playerPawn->m_pGameSceneNode())->GetBoneData();
+
+                SDK::Vector aimPos = BoneData[Config::Aimbot::BoneIndex].pos;
+
+                // 通过骨骼索引压枪，效果不太好，先注释掉
+                // if (localPlayerPawn->m_iShotsFired())
+                // {
+                //     int calcBoneIndex = Config::Aimbot::BoneIndex - localPlayerPawn->m_iShotsFired();
+                //     aimPos            = BoneData[calcBoneIndex < 0 ? 0 : calcBoneIndex].pos;
+                // }
+
+                SDK::Vector aimAngle = SDK::CalcAngle(localPlayerPawn->m_vecLastClipCameraPos(), aimPos);
+                Offset::SetViewAngle(Offset::CSGOInput, 0, aimAngle);
                 break;
             }
         }

@@ -1,4 +1,35 @@
-﻿#include "Console.hpp"
+﻿#include <Windows.h>
+#include <d3d11.h>
+#include <iostream>
+#include <stdint.h>
+#include <stdio.h>
+#include <string>
+
+#include "imgui.h"
+#include "imgui_impl_dx11.h"
+#include "imgui_impl_win32.h"
+
+#include "Memory.hpp"
+#include "Virtual.hpp"
+#include "SDK.hpp"
+
+#include "Interface.hpp"
+#include "Schema.hpp"
+
+#include "CSkeletonInstance.hpp"
+#include "C_BaseEntity.hpp"
+#include "CHandle.hpp"
+#include "C_CSPlayerPawn.hpp"
+#include "CCSPlayerController.hpp"
+
+#include "Offset.hpp"
+
+// include
+#include "Config.hpp"
+
+#include "Cheats.hpp"
+#include "Console.hpp"
+#include "GUI.hpp"
 #include "Hook.hpp"
 
 DWORD WINAPI UnloadThread(LPVOID hModule)

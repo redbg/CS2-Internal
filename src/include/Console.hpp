@@ -1,7 +1,4 @@
 ﻿#pragma once
-#include <Windows.h>
-#include <locale>
-#include <stdio.h>
 
 namespace Console
 {

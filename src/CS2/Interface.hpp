@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include <Windows.h>
 
 // 前置声明
 namespace CS2::Schema
