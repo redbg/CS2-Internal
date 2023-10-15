@@ -133,7 +133,7 @@ namespace CS2::Cheats
             {
                 auto BoneData = static_cast<CS2::Class::CSkeletonInstance *>(playerPawn->m_pGameSceneNode())->GetBoneData();
 
-                SDK::Vector aimPos = BoneData[Config::Aimbot::BoneIndex].pos;
+                SDK::Vector aimPos = BoneData[localPlayerPawn->m_bIsScoped() ? Config::Aimbot::ScopedAimBoneIndex : Config::Aimbot::AimBoneIndex].pos;
 
                 // 通过骨骼索引压枪，效果不太好，先注释掉
                 // if (localPlayerPawn->m_iShotsFired())

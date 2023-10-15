@@ -32,7 +32,8 @@ namespace GUI
             ImGui::Checkbox("Enable##Aimbot", &Config::Aimbot::Enable);
             ImGui::Checkbox("CheckTeam##Aimbot", &Config::Aimbot::CheckTeam);
             ImGui::Checkbox("CheckVisible##Aimbot", &Config::Aimbot::CheckVisible);
-            ImGui::DragInt("BoneIndex##Aimbot", &Config::Aimbot::BoneIndex, 0.1f, 0, 6);
+            ImGui::DragInt("AimBoneIndex##Aimbot", &Config::Aimbot::AimBoneIndex, 0.1f, 0, 6);
+            ImGui::DragInt("ScopedAimBoneIndex##Aimbot", &Config::Aimbot::ScopedAimBoneIndex, 0.1f, 0, 6);
 
             // Radar
             ImGui::SeparatorText("Radar");

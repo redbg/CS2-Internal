@@ -11,10 +11,11 @@ namespace Config
 
     namespace Aimbot
     {
-        bool Enable       = true;
-        bool CheckTeam    = true;
-        bool CheckVisible = true;
-        int  BoneIndex    = 6;
+        bool Enable             = true;
+        bool CheckTeam          = true;
+        bool CheckVisible       = true;
+        int  AimBoneIndex       = 6;
+        int  ScopedAimBoneIndex = 4;
     } // namespace Aimbot
 
     namespace Radar
