@@ -56,9 +56,9 @@ namespace CS2::Cheats
 
         auto localPlayerController = *CS2::Offset::LocalPlayerController;
 
-        for (uint64_t i = 1; i <= 64; i++)
+        for (uint64_t i = 0; i < 64; i++)
         {
-            auto playerController = (Class::CCSPlayerController *)Offset::GetBaseEntity(*Offset::GameEntitySystem, i);
+            auto playerController = (Class::CCSPlayerController *)Offset::GetBaseEntity(*Offset::GameEntitySystem, i + 1);
 
             if (playerController == nullptr)
                 continue;
@@ -96,11 +96,11 @@ namespace CS2::Cheats
         if (!localPlayerController->m_bPawnIsAlive())
             return;
 
-        static uint64_t localPlayerControllerIndex = 1;
+        static uint64_t localPlayerControllerIndex = 0;
 
-        for (uint64_t i = 1; i <= 64; i++)
+        for (uint64_t i = 0; i < 64; i++)
         {
-            auto playerController = (Class::CCSPlayerController *)Offset::GetBaseEntity(*Offset::GameEntitySystem, i);
+            auto playerController = (Class::CCSPlayerController *)Offset::GetBaseEntity(*Offset::GameEntitySystem, i + 1);
 
             if (playerController == nullptr)
                 continue;
@@ -128,8 +128,8 @@ namespace CS2::Cheats
 
             // Check Visible
             if (Config::Aimbot::CheckVisible == false ||
-                playerPawn->m_entitySpottedState().GetSpottedByMask() & (uint64_t(1) << (localPlayerControllerIndex - 1)) ||
-                localPlayerPawn->m_entitySpottedState().GetSpottedByMask() & (uint64_t(1) << (i - 1)))
+                playerPawn->m_entitySpottedState().GetSpottedByMask() & (uint64_t(1) << localPlayerControllerIndex) ||
+                localPlayerPawn->m_entitySpottedState().GetSpottedByMask() & (uint64_t(1) << i))
             {
                 auto BoneData = static_cast<CS2::Class::CSkeletonInstance *>(playerPawn->m_pGameSceneNode())->GetBoneData();
 

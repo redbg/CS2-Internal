@@ -9,7 +9,7 @@ namespace GUI
     {
         // ImGui::ShowDemoWindow();
 
-        ImGui::Begin("Main");
+        ImGui::Begin("https://github.com/redbg/CS2-Internal");
 
         ShowCheatsWindow();
         ShowDebugWindow();
@@ -25,14 +25,14 @@ namespace GUI
             ImGui::SeparatorText("Triggerbot");
             ImGui::Checkbox("Enable##Triggerbot", &Config::Triggerbot::Enable);
             ImGui::Checkbox("CheckTeam##Triggerbot", &Config::Triggerbot::CheckTeam);
-            ImGui::InputFloat("Delay##Triggerbot", &Config::Triggerbot::Delay);
+            ImGui::DragFloat("Delay##Triggerbot", &Config::Triggerbot::Delay, 0.001f, 0, 1);
 
             // Aimbot
             ImGui::SeparatorText("Aimbot");
             ImGui::Checkbox("Enable##Aimbot", &Config::Aimbot::Enable);
             ImGui::Checkbox("CheckTeam##Aimbot", &Config::Aimbot::CheckTeam);
             ImGui::Checkbox("CheckVisible##Aimbot", &Config::Aimbot::CheckVisible);
-            ImGui::InputInt("BoneIndex##Aimbot", &Config::Aimbot::BoneIndex);
+            ImGui::DragInt("BoneIndex##Aimbot", &Config::Aimbot::BoneIndex, 0.1f, 0, 6);
 
             // Radar
             ImGui::SeparatorText("Radar");
@@ -61,9 +61,9 @@ namespace GUI
                 if (!CS2::Interface::EngineClient->IsInGame())
                     return;
 
-                for (int i = 1; i <= 64; i++)
+                for (int i = 0; i < 64; i++)
                 {
-                    CS2::Class::CCSPlayerController *playerController = static_cast<CS2::Class::CCSPlayerController *>(CS2::Offset::GetBaseEntity(*CS2::Offset::GameEntitySystem, i));
+                    CS2::Class::CCSPlayerController *playerController = static_cast<CS2::Class::CCSPlayerController *>(CS2::Offset::GetBaseEntity(*CS2::Offset::GameEntitySystem, i + 1));
 
                     if (playerController == nullptr)
                         continue;

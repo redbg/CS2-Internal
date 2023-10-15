@@ -6,7 +6,7 @@ namespace Console
     {
         AllocConsole();
         SetConsoleOutputCP(CP_UTF8);
-        SetConsoleTitleA("CS2-Internal");
+        SetConsoleTitleA("https://github.com/redbg/CS2-Internal");
         freopen_s((FILE **)stdin, "CONIN$", "r", stdin);
         freopen_s((FILE **)stdout, "CONOUT$", "w", stdout);
         freopen_s((FILE **)stderr, "CONOUT$", "w", stderr);
