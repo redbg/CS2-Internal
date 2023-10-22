@@ -133,7 +133,7 @@ namespace CS2::Cheats
                 SDK::Vector aimAngle  = {};
                 float       FOV       = Config::Aimbot::FOV;
 
-                for (size_t i = 0; i <= 6; i++)
+                for (int i = 4; i <= 6; i++)
                 {
                     if (SDK::GetFov(viewAngle, SDK::CalcAngle(localPlayerPawn->m_vecLastClipCameraPos(), BoneData[i].pos)) < FOV)
                     {
