@@ -8,7 +8,7 @@
 - Aimbot
   - CheckTeam
   - CheckVisible
-  - BoneIndex
+  - FOV
 - Radar
   - Spotted
 
