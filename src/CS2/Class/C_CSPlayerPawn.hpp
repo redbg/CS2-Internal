@@ -55,8 +55,9 @@ namespace CS2::Class
     class C_CSPlayerPawnBase : public C_BasePlayerPawn
     {
     public:
-        SCHEMA(bool, m_bIsScoped, "m_bIsScoped", "C_CSPlayerPawnBase", "client.dll");   // 是否开镜
-        SCHEMA(bool, m_bIsWalking, "m_bIsWalking", "C_CSPlayerPawnBase", "client.dll"); // 是否静步
+        SCHEMA(bool, m_bIsScoped, "m_bIsScoped", "C_CSPlayerPawnBase", "client.dll");               // 是否开镜
+        SCHEMA(bool, m_bIsWalking, "m_bIsWalking", "C_CSPlayerPawnBase", "client.dll");             // 是否静步
+        SCHEMA(bool, m_bGunGameImmunity, "m_bGunGameImmunity", "C_CSPlayerPawnBase", "client.dll"); // 无敌状态
         SCHEMA(int32_t, m_iShotsFired, "m_iShotsFired", "C_CSPlayerPawnBase", "client.dll");
         SCHEMA(int, m_iIDEntIndex, "m_iIDEntIndex", "C_CSPlayerPawnBase", "client.dll");
         SCHEMA(CountdownTimer, m_delayTargetIDTimer, "m_delayTargetIDTimer", "C_CSPlayerPawnBase", "client.dll");

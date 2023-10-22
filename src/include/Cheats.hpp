@@ -123,6 +123,10 @@ namespace CS2::Cheats
 
             auto playerPawn = static_cast<CS2::Class::C_CSPlayerPawn *>(playerController->m_hPawn().Get());
 
+            // 判断无敌状态
+            if (playerPawn->m_bGunGameImmunity())
+                continue;
+
             // Check Visible
             if (Config::Aimbot::CheckVisible == false ||
                 playerPawn->m_entitySpottedState().GetSpottedByMask() & (uint64_t(1) << localPlayerControllerIndex) ||
