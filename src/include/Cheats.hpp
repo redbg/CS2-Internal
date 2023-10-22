@@ -123,28 +123,31 @@ namespace CS2::Cheats
 
             auto playerPawn = static_cast<CS2::Class::C_CSPlayerPawn *>(playerController->m_hPawn().Get());
 
-            if (playerPawn->m_iHealth() <= 0)
-                return;
-
             // Check Visible
             if (Config::Aimbot::CheckVisible == false ||
                 playerPawn->m_entitySpottedState().GetSpottedByMask() & (uint64_t(1) << localPlayerControllerIndex) ||
                 localPlayerPawn->m_entitySpottedState().GetSpottedByMask() & (uint64_t(1) << i))
             {
-                auto BoneData = static_cast<CS2::Class::CSkeletonInstance *>(playerPawn->m_pGameSceneNode())->GetBoneData();
+                auto        BoneData  = static_cast<CS2::Class::CSkeletonInstance *>(playerPawn->m_pGameSceneNode())->GetBoneData();
+                SDK::Vector viewAngle = Offset::GetViewAngle(Offset::CSGOInput, 0);
+                SDK::Vector aimAngle  = {};
+                float       FOV       = Config::Aimbot::FOV;
 
-                SDK::Vector aimPos = BoneData[localPlayerPawn->m_bIsScoped() ? Config::Aimbot::ScopedAimBoneIndex : Config::Aimbot::AimBoneIndex].pos;
+                for (size_t i = 0; i <= 6; i++)
+                {
+                    if (SDK::GetFov(viewAngle, SDK::CalcAngle(localPlayerPawn->m_vecLastClipCameraPos(), BoneData[i].pos)) < FOV)
+                    {
+                        aimAngle = SDK::CalcAngle(localPlayerPawn->m_vecLastClipCameraPos(), BoneData[i].pos);
+                        FOV      = SDK::GetFov(viewAngle, aimAngle);
+                    }
+                }
 
-                // 通过骨骼索引压枪，效果不太好，先注释掉
-                // if (localPlayerPawn->m_iShotsFired())
-                // {
-                //     int calcBoneIndex = Config::Aimbot::BoneIndex - localPlayerPawn->m_iShotsFired();
-                //     aimPos            = BoneData[calcBoneIndex < 0 ? 0 : calcBoneIndex].pos;
-                // }
-
-                SDK::Vector aimAngle = SDK::CalcAngle(localPlayerPawn->m_vecLastClipCameraPos(), aimPos);
-                Offset::SetViewAngle(Offset::CSGOInput, 0, aimAngle);
-                break;
+                // Check FOV
+                if (FOV < Config::Aimbot::FOV)
+                {
+                    Offset::SetViewAngle(Offset::CSGOInput, 0, aimAngle);
+                    break;
+                }
             }
         }
     }

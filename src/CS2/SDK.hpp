@@ -61,4 +61,28 @@ namespace CS2::SDK
         return angle;
     }
 
+    Vector NormalizeAngles(Vector angle)
+    {
+        while (angle.x > 89.0f)
+            angle.x -= 180.f;
+
+        while (angle.x < -89.0f)
+            angle.x += 180.f;
+
+        while (angle.y > 180.f)
+            angle.y -= 360.f;
+
+        while (angle.y < -180.f)
+            angle.y += 360.f;
+
+        return angle;
+    }
+
+    float GetFov(Vector viewAngle, Vector aimAngle)
+    {
+        Vector delta = aimAngle - viewAngle;
+        delta        = NormalizeAngles(delta);
+        return sqrt(pow(delta.x, 2.0f) + pow(delta.y, 2.0f));
+    }
+
 } // namespace CS2::SDK

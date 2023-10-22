@@ -25,15 +25,14 @@ namespace GUI
             ImGui::SeparatorText("Triggerbot");
             ImGui::Checkbox("Enable##Triggerbot", &Config::Triggerbot::Enable);
             ImGui::Checkbox("CheckTeam##Triggerbot", &Config::Triggerbot::CheckTeam);
-            ImGui::DragFloat("Delay##Triggerbot", &Config::Triggerbot::Delay, 0.001f, 0, 1);
+            ImGui::DragFloat("Delay##Triggerbot", &Config::Triggerbot::Delay, 0.001f, 0.0f, 1.0f);
 
             // Aimbot
             ImGui::SeparatorText("Aimbot");
             ImGui::Checkbox("Enable##Aimbot", &Config::Aimbot::Enable);
             ImGui::Checkbox("CheckTeam##Aimbot", &Config::Aimbot::CheckTeam);
             ImGui::Checkbox("CheckVisible##Aimbot", &Config::Aimbot::CheckVisible);
-            ImGui::DragInt("AimBoneIndex##Aimbot", &Config::Aimbot::AimBoneIndex, 0.1f, 0, 6);
-            ImGui::DragInt("ScopedAimBoneIndex##Aimbot", &Config::Aimbot::ScopedAimBoneIndex, 0.1f, 0, 6);
+            ImGui::DragFloat("FOV##Aimbot", &Config::Aimbot::FOV, 0.1f, 0.0f, 180.0f);
 
             // Radar
             ImGui::SeparatorText("Radar");
