@@ -9,12 +9,25 @@ namespace GUI
     {
         // ImGui::ShowDemoWindow();
 
-        ImGui::Begin("https://github.com/redbg/CS2-Internal");
+        if (ImGui::IsKeyPressed(ImGuiKey_Home))
+        {
+            Config::Open = !Config::Open;
+        }
 
-        ShowCheatsWindow();
-        ShowDebugWindow();
+        if (ImGui::IsKeyPressed(ImGuiKey_End))
+        {
+            CreateThread(0, 0, UnloadThread, 0, 0, 0);
+        }
 
-        ImGui::End();
+        if (Config::Open)
+        {
+            ImGui::Begin("https://github.com/redbg/CS2-Internal", &Config::Open);
+
+            ShowCheatsWindow();
+            ShowDebugWindow();
+
+            ImGui::End();
+        }
     }
 
     void ShowCheatsWindow()
@@ -24,15 +37,17 @@ namespace GUI
             // Triggerbot
             ImGui::SeparatorText("Triggerbot");
             ImGui::Checkbox("Enable##Triggerbot", &Config::Triggerbot::Enable);
-            ImGui::Checkbox("CheckTeam##Triggerbot", &Config::Triggerbot::CheckTeam);
+            ImGui::Checkbox("Check Team##Triggerbot", &Config::Triggerbot::CheckTeam);
             ImGui::DragFloat("Delay##Triggerbot", &Config::Triggerbot::Delay, 0.001f, 0.0f, 1.0f);
 
             // Aimbot
             ImGui::SeparatorText("Aimbot");
             ImGui::Checkbox("Enable##Aimbot", &Config::Aimbot::Enable);
-            ImGui::Checkbox("CheckTeam##Aimbot", &Config::Aimbot::CheckTeam);
-            ImGui::Checkbox("CheckVisible##Aimbot", &Config::Aimbot::CheckVisible);
+            ImGui::Checkbox("Check Team##Aimbot", &Config::Aimbot::CheckTeam);
+            ImGui::Checkbox("Check Visible##Aimbot", &Config::Aimbot::CheckVisible);
+            ImGui::Checkbox("Recoil Control##Aimbot", &Config::Aimbot::RecoilControl);
             ImGui::DragFloat("FOV##Aimbot", &Config::Aimbot::FOV, 0.1f, 0.0f, 180.0f);
+            ImGui::DragInt("AimBoneIndex##Aimbot", &Config::Aimbot::AimBoneIndex, 0.1f, 0, 6);
 
             // Radar
             ImGui::SeparatorText("Radar");

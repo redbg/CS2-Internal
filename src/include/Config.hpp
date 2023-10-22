@@ -2,6 +2,8 @@
 
 namespace Config
 {
+    bool Open = true;
+
     namespace Triggerbot
     {
         bool  Enable    = true;
@@ -11,10 +13,12 @@ namespace Config
 
     namespace Aimbot
     {
-        bool  Enable       = true;
-        bool  CheckTeam    = true;
-        bool  CheckVisible = true;
-        float FOV          = 10.0f;
+        bool  Enable        = true;
+        bool  CheckTeam     = true;
+        bool  CheckVisible  = true;
+        bool  RecoilControl = true;
+        float FOV           = 10.0f;
+        int   AimBoneIndex  = 4;
     } // namespace Aimbot
 
     namespace Radar

@@ -64,16 +64,18 @@ namespace CS2::SDK
     Vector NormalizeAngles(Vector angle)
     {
         while (angle.x > 89.0f)
-            angle.x -= 180.f;
+            angle.x = 89.0f;
 
         while (angle.x < -89.0f)
-            angle.x += 180.f;
+            angle.x = -89.0f;
 
-        while (angle.y > 180.f)
-            angle.y -= 360.f;
+        while (angle.y > 180.0f)
+            angle.y -= 360.0f;
 
-        while (angle.y < -180.f)
-            angle.y += 360.f;
+        while (angle.y < -180.0f)
+            angle.y += 360.0f;
+
+        angle.z = 0;
 
         return angle;
     }

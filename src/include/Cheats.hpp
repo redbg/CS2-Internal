@@ -133,7 +133,7 @@ namespace CS2::Cheats
                 SDK::Vector aimAngle  = {};
                 float       FOV       = Config::Aimbot::FOV;
 
-                for (int i = 4; i <= 6; i++)
+                for (int i = Config::Aimbot::AimBoneIndex; i <= 6; i++)
                 {
                     if (SDK::GetFov(viewAngle, SDK::CalcAngle(localPlayerPawn->m_vecLastClipCameraPos(), BoneData[i].pos)) < FOV)
                     {
@@ -145,7 +145,16 @@ namespace CS2::Cheats
                 // Check FOV
                 if (FOV < Config::Aimbot::FOV)
                 {
-                    Offset::SetViewAngle(Offset::CSGOInput, 0, aimAngle);
+                    // Recoil Control
+                    if (Config::Aimbot::RecoilControl && localPlayerPawn->m_iShotsFired() && localPlayerPawn->m_aimPunchCache().m_Size)
+                    {
+                        SDK::Vector aimPunchAngle = localPlayerPawn->m_aimPunchCache().m_Elements[localPlayerPawn->m_aimPunchCache().m_Size - 1];
+
+                        aimAngle.x = aimAngle.x - (aimPunchAngle.x * 2.0f);
+                        aimAngle.y = aimAngle.y - (aimPunchAngle.y * 2.0f);
+                    }
+
+                    Offset::SetViewAngle(Offset::CSGOInput, 0, SDK::NormalizeAngles(aimAngle));
                     break;
                 }
             }

@@ -9,6 +9,14 @@
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
 
+HMODULE g_hModule = NULL;
+
+DWORD WINAPI UnloadThread(LPVOID)
+{
+    FreeLibraryAndExitThread(g_hModule, 0);
+    return 0;
+}
+
 #include "Memory.hpp"
 #include "Virtual.hpp"
 #include "SDK.hpp"
@@ -32,24 +40,13 @@
 #include "GUI.hpp"
 #include "Hook.hpp"
 
-DWORD WINAPI UnloadThread(LPVOID hModule)
-{
-    while (!GetAsyncKeyState(VK_END))
-    {
-        Sleep(100);
-    }
-
-    FreeLibraryAndExitThread((HMODULE)hModule, 0);
-    return 0;
-}
-
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID)
 {
     switch (dwReason)
     {
     case DLL_PROCESS_ATTACH:
         DisableThreadLibraryCalls(hModule);
-        CreateThread(0, 0, UnloadThread, (HMODULE)hModule, 0, 0);
+        g_hModule = hModule;
         Console::Initialize();
         Hook::Initialize();
         break;

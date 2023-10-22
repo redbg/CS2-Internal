@@ -69,6 +69,8 @@ namespace CS2::Class
     class C_CSPlayerPawn : public C_CSPlayerPawnBase
     {
     public:
+        SCHEMA(SDK::Vector, m_aimPunchAngle, "m_aimPunchAngle", "C_CSPlayerPawn", "client.dll");
+        SCHEMA(SDK::CUtlVector<SDK::Vector>, m_aimPunchCache, "m_aimPunchCache", "C_CSPlayerPawn", "client.dll");
     };
 
 } // namespace CS2::Class

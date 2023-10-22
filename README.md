@@ -8,7 +8,9 @@
 - Aimbot
   - CheckTeam
   - CheckVisible
+  - RecoilControl
   - FOV
+  - AimBoneIndex
 - Radar
   - Spotted
 
